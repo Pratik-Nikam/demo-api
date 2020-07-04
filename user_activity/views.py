@@ -9,8 +9,8 @@ from .serializers import UserMasterSerializer,ActivityMasterSerializer
 
 
 """
-This API aims to provide List the Activity Timining of Users from Database.
-API returns User Details with their different timinings logged in database. 
+This API aims to provide List the Activity Timings of Users from Database.
+API returns User Details with their different timinigs logged in database. 
 
 This API is created using class based views, Generic Views designed so that different views 
 will not require if any new model added to database. New added model can be passed through 
@@ -72,7 +72,7 @@ class GenericView(generics.ListAPIView):
             response_data = \
                     {
                         "Name": "Demp API",
-                        "Summary": "Disply User details with Activity Timinings",
+                        "Summary": "Disply User details with Activity Timings",
                         # "URL": f"https://creditpulseapi.decimalpointanalytics.com{request.get_full_path()}",
                         "Results":{
                                 "Copyright": "Copyright (c) Test Company Pvt.Ltd.",
@@ -85,7 +85,7 @@ class GenericView(generics.ListAPIView):
             response_data = \
                     {
                         "Name": "Demo API",
-                        "Summary": "Disply User details with Activity Timinings",
+                        "Summary": "Disply User details with Activity Timings",
                         # "URL": f"https://demoapi.com{request.get_full_path()}",                       
                         "Message": "Success",
                         'MembersInfo': members,                 
