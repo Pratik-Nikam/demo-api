@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils import timezone
 # Create your models here.
-class AbstractModel(models.Model):
 
+class AbstractModel(models.Model):
     create_date = models.DateTimeField(
         db_column="create_date",
         verbose_name="create Date",
@@ -67,9 +67,7 @@ class UserMaster(AbstractModel):
     def __str__(self):
         return f"{self.user_name}"
 
-
 class ActivityMaster(AbstractModel):
-
     user = models.ForeignKey(
         UserMaster,
         on_delete=models.CASCADE,

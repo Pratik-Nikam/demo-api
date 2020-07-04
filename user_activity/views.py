@@ -1,10 +1,21 @@
+import pandas as pd
 from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.response import Response
 from .models import UserMaster,ActivityMaster
 from collections import OrderedDict
 from .serializers import UserMasterSerializer,ActivityMasterSerializer
-import pandas as pd
+
+
+
+"""
+This API aims to provide List the Activity Timining of Users from Database.
+API returns User Details with their different timinings logged in database. 
+
+This API is created using class based views, Generic Views designed so that different views 
+will not require if any new model added to database. New added model can be passed through 
+URL's which will received in Views and processed further.
+"""
 
 
 # Create your views here.
@@ -40,12 +51,12 @@ class GenericView(generics.ListAPIView):
         serializer = self.get_serializer(queryset, many=True) #serialize the queryset
         info = serializer.data #parsing serizlize data to modify its structural representaion 
         
-        df = pd.DataFrame(info)
-        df['user'] = df['user'].apply(lambda x: dict(eval(str(x))))
-        user_list = uniq_list = (df['user'].tolist())
-        uniq_list = [dict(t) for t in {tuple(d.items()) for d in user_list}]
+        df = pd.DataFrame(info) #Convert serizlized data into dataframe
+        df['user'] = df['user'].apply(lambda x: dict(eval(str(x)))) #ordered dict of info converted to string --converting it to dict
+        user_list = uniq_list = (df['user'].tolist()) #unique users of df to list
+        uniq_list = [dict(t) for t in {tuple(d.items()) for d in user_list}] 
         members = []
-
+        
         for i in uniq_list:
             temp_df = df[df['user'] == i]
             temp_df.reset_index(drop=True,inplace=True)
@@ -60,11 +71,11 @@ class GenericView(generics.ListAPIView):
         if len(info) == 0:
             response_data = \
                     {
-                        "Name": "DempAPI",
+                        "Name": "Demp API",
                         "Summary": "Disply User details with Activity Timinings",
-                        "URL": f"https://creditpulseapi.decimalpointanalytics.com{request.get_full_path()}",
+                        # "URL": f"https://creditpulseapi.decimalpointanalytics.com{request.get_full_path()}",
                         "Results":{
-                                "Copyright": "Copyright (c) 2019 Decimal Point Analytics Pvt.Ltd.",
+                                "Copyright": "Copyright (c) Test Company Pvt.Ltd.",
                                 "Message": "Failure",
                                 'Information': "Something went wrong",
                         }
@@ -75,7 +86,7 @@ class GenericView(generics.ListAPIView):
                     {
                         "Name": "Demo API",
                         "Summary": "Disply User details with Activity Timinings",
-                        "URL": f"https://demoapi.com{request.get_full_path()}",                       
+                        # "URL": f"https://demoapi.com{request.get_full_path()}",                       
                         "Message": "Success",
                         'MembersInfo': members,                 
                     }
